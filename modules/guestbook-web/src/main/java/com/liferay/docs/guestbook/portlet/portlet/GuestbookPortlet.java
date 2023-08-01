@@ -35,17 +35,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.social",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.instanceable=false",
-		"com.liferay.portlet.scopeable=true",
-		"javax.portlet.display-name=Guestbook",
-		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/guestbookwebportlet/view.jsp",
+			"com.liferay.portlet.display-category=category.social",
+			"com.liferay.portlet.instanceable=false",
+			"com.liferay.portlet.scopeable=true",
+			"javax.portlet.display-name=Guestbook",
+			"javax.portlet.expiration-cache=0",
+			"javax.portlet.init-param.template-path=/",
+			"javax.portlet.init-param.viewtemplate=/guestbookwebportlet/view.jsp",
+			"javax.portlet.resource-bundle=content.Language",
+			"javax.portlet.security-role-ref=power-user,user",
+			"javax.portlet.supports.mime-type=text/html",
 		"javax.portlet.name=" + GuestbookPortletKeys.GUESTBOOK,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.supports.mime-type=text/html"
+
 	},
 	service = Portlet.class
 )
@@ -73,9 +74,9 @@ public class GuestbookPortlet extends MVCPortlet {
 		long entryId = ParamUtil.getLong(request, "entryId");
 		if (entryId > 0) {
 			try {
+				
 				_entryLocalService.updateEntry(
-				serviceContext.getUserId(), guestbookId, entryId, userName,
-				email, message, serviceContext);
+					    serviceContext.getUserId(), guestbookId, entryId, userName, email, message, serviceContext);
 				SessionMessages.add(request, "entryAdded");
 				response.setRenderParameter(
 				"guestbookId", Long.toString(guestbookId));
@@ -90,6 +91,7 @@ public class GuestbookPortlet extends MVCPortlet {
 			}
 			else {
 				try {
+					
 					_entryLocalService.addEntry(
 					serviceContext.getUserId(), guestbookId, userName, email,
 					message, serviceContext);

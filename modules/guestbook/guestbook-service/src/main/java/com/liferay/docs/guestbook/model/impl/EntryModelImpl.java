@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -81,8 +80,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"email", Types.VARCHAR},
 		{"message", Types.VARCHAR}, {"guestbookId", Types.BIGINT}
 	};
@@ -99,10 +96,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("email", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("message", Types.VARCHAR);
@@ -110,7 +103,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table GB_Entry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,name VARCHAR(75) null,email VARCHAR(75) null,message VARCHAR(75) null,guestbookId LONG)";
+		"create table GB_Entry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,email VARCHAR(75) null,message VARCHAR(75) null,guestbookId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table GB_Entry";
 
@@ -170,10 +163,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setStatus(soapModel.getStatus());
-		model.setStatusByUserId(soapModel.getStatusByUserId());
-		model.setStatusByUserName(soapModel.getStatusByUserName());
-		model.setStatusDate(soapModel.getStatusDate());
 		model.setName(soapModel.getName());
 		model.setEmail(soapModel.getEmail());
 		model.setMessage(soapModel.getMessage());
@@ -486,86 +475,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 			});
 		attributeGetterFunctions.put(
-			"status",
-			new Function<Entry, Object>() {
-
-				@Override
-				public Object apply(Entry entry) {
-					return entry.getStatus();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"status",
-			new BiConsumer<Entry, Object>() {
-
-				@Override
-				public void accept(Entry entry, Object status) {
-					entry.setStatus((Integer)status);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"statusByUserId",
-			new Function<Entry, Object>() {
-
-				@Override
-				public Object apply(Entry entry) {
-					return entry.getStatusByUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"statusByUserId",
-			new BiConsumer<Entry, Object>() {
-
-				@Override
-				public void accept(Entry entry, Object statusByUserId) {
-					entry.setStatusByUserId((Long)statusByUserId);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"statusByUserName",
-			new Function<Entry, Object>() {
-
-				@Override
-				public Object apply(Entry entry) {
-					return entry.getStatusByUserName();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			new BiConsumer<Entry, Object>() {
-
-				@Override
-				public void accept(Entry entry, Object statusByUserName) {
-					entry.setStatusByUserName((String)statusByUserName);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"statusDate",
-			new Function<Entry, Object>() {
-
-				@Override
-				public Object apply(Entry entry) {
-					return entry.getStatusDate();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"statusDate",
-			new BiConsumer<Entry, Object>() {
-
-				@Override
-				public void accept(Entry entry, Object statusDate) {
-					entry.setStatusDate((Date)statusDate);
-				}
-
-			});
-		attributeGetterFunctions.put(
 			"name",
 			new Function<Entry, Object>() {
 
@@ -808,71 +717,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	@JSON
 	@Override
-	public int getStatus() {
-		return _status;
-	}
-
-	@Override
-	public void setStatus(int status) {
-		_status = status;
-	}
-
-	@JSON
-	@Override
-	public long getStatusByUserId() {
-		return _statusByUserId;
-	}
-
-	@Override
-	public void setStatusByUserId(long statusByUserId) {
-		_statusByUserId = statusByUserId;
-	}
-
-	@Override
-	public String getStatusByUserUuid() {
-		try {
-			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
-
-			return user.getUuid();
-		}
-		catch (PortalException pe) {
-			return "";
-		}
-	}
-
-	@Override
-	public void setStatusByUserUuid(String statusByUserUuid) {
-	}
-
-	@JSON
-	@Override
-	public String getStatusByUserName() {
-		if (_statusByUserName == null) {
-			return "";
-		}
-		else {
-			return _statusByUserName;
-		}
-	}
-
-	@Override
-	public void setStatusByUserName(String statusByUserName) {
-		_statusByUserName = statusByUserName;
-	}
-
-	@JSON
-	@Override
-	public Date getStatusDate() {
-		return _statusDate;
-	}
-
-	@Override
-	public void setStatusDate(Date statusDate) {
-		_statusDate = statusDate;
-	}
-
-	@JSON
-	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -948,86 +792,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			PortalUtil.getClassNameId(Entry.class.getName()));
 	}
 
-	@Override
-	public boolean isApproved() {
-		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isDenied() {
-		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isDraft() {
-		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isExpired() {
-		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isInactive() {
-		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isIncomplete() {
-		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isPending() {
-		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isScheduled() {
-		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1067,10 +831,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		entryImpl.setUserName(getUserName());
 		entryImpl.setCreateDate(getCreateDate());
 		entryImpl.setModifiedDate(getModifiedDate());
-		entryImpl.setStatus(getStatus());
-		entryImpl.setStatusByUserId(getStatusByUserId());
-		entryImpl.setStatusByUserName(getStatusByUserName());
-		entryImpl.setStatusDate(getStatusDate());
 		entryImpl.setName(getName());
 		entryImpl.setEmail(getEmail());
 		entryImpl.setMessage(getMessage());
@@ -1202,27 +962,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			entryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		entryCacheModel.status = getStatus();
-
-		entryCacheModel.statusByUserId = getStatusByUserId();
-
-		entryCacheModel.statusByUserName = getStatusByUserName();
-
-		String statusByUserName = entryCacheModel.statusByUserName;
-
-		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
-			entryCacheModel.statusByUserName = null;
-		}
-
-		Date statusDate = getStatusDate();
-
-		if (statusDate != null) {
-			entryCacheModel.statusDate = statusDate.getTime();
-		}
-		else {
-			entryCacheModel.statusDate = Long.MIN_VALUE;
-		}
-
 		entryCacheModel.name = getName();
 
 		String name = entryCacheModel.name;
@@ -1330,10 +1069,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private int _status;
-	private long _statusByUserId;
-	private String _statusByUserName;
-	private Date _statusDate;
 	private String _name;
 	private String _email;
 	private String _message;

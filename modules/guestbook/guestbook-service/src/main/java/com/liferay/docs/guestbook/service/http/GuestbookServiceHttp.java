@@ -125,9 +125,7 @@ public class GuestbookServiceHttp {
 
 	public static java.util.List<com.liferay.docs.guestbook.model.Guestbook>
 		getGuestbooks(
-			HttpPrincipal httpPrincipal, long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.docs.guestbook.model.Guestbook> obc) {
+			HttpPrincipal httpPrincipal, long groupId, int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -135,7 +133,7 @@ public class GuestbookServiceHttp {
 				_getGuestbooksParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end, obc);
+				methodKey, groupId, start, end);
 
 			Object returnObj = null;
 
@@ -159,7 +157,9 @@ public class GuestbookServiceHttp {
 
 	public static java.util.List<com.liferay.docs.guestbook.model.Guestbook>
 		getGuestbooks(
-			HttpPrincipal httpPrincipal, long groupId, int start, int end) {
+			HttpPrincipal httpPrincipal, long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.docs.guestbook.model.Guestbook> obc) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -167,7 +167,7 @@ public class GuestbookServiceHttp {
 				_getGuestbooksParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end);
+				methodKey, groupId, start, end, obc);
 
 			Object returnObj = null;
 
@@ -227,12 +227,12 @@ public class GuestbookServiceHttp {
 	private static final Class<?>[] _getGuestbooksParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getGuestbooksParameterTypes2 =
+		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getGuestbooksParameterTypes3 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getGuestbooksParameterTypes3 =
-		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _getGuestbooksCountParameterTypes4 =
 		new Class[] {long.class};
 

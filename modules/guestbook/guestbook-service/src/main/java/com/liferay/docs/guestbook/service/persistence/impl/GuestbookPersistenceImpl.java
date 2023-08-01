@@ -2835,8 +2835,7 @@ public class GuestbookPersistenceImpl
 			GuestbookModelImpl.FINDER_CACHE_ENABLED, GuestbookImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			GuestbookModelImpl.UUID_COLUMN_BITMASK |
-			GuestbookModelImpl.GROUPID_COLUMN_BITMASK);
+			GuestbookModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			GuestbookModelImpl.ENTITY_CACHE_ENABLED,
@@ -2874,8 +2873,7 @@ public class GuestbookPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			GuestbookModelImpl.UUID_COLUMN_BITMASK |
-			GuestbookModelImpl.COMPANYID_COLUMN_BITMASK |
-			GuestbookModelImpl.GROUPID_COLUMN_BITMASK);
+			GuestbookModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			GuestbookModelImpl.ENTITY_CACHE_ENABLED,

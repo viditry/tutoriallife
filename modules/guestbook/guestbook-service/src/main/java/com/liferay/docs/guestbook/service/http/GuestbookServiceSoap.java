@@ -102,16 +102,13 @@ public class GuestbookServiceSoap {
 	}
 
 	public static com.liferay.docs.guestbook.model.GuestbookSoap[]
-			getGuestbooks(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.docs.guestbook.model.Guestbook> obc)
+			getGuestbooks(long groupId, int start, int end)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.liferay.docs.guestbook.model.Guestbook>
 				returnValue = GuestbookServiceUtil.getGuestbooks(
-					groupId, start, end, obc);
+					groupId, start, end);
 
 			return com.liferay.docs.guestbook.model.GuestbookSoap.toSoapModels(
 				returnValue);
@@ -124,13 +121,16 @@ public class GuestbookServiceSoap {
 	}
 
 	public static com.liferay.docs.guestbook.model.GuestbookSoap[]
-			getGuestbooks(long groupId, int start, int end)
+			getGuestbooks(
+				long groupId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.docs.guestbook.model.Guestbook> obc)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.liferay.docs.guestbook.model.Guestbook>
 				returnValue = GuestbookServiceUtil.getGuestbooks(
-					groupId, start, end);
+					groupId, start, end, obc);
 
 			return com.liferay.docs.guestbook.model.GuestbookSoap.toSoapModels(
 				returnValue);

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * The implementation of the entry local service.
  *
@@ -49,7 +50,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.docs.guestbook.service.EntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.docs.guestbook.service.EntryLocalServiceUtil</code>.
 	 */
-	
+
 	public Entry addEntry(
 		long userId, long guestbookId, String name, String email,
 		String message, ServiceContext serviceContext)
@@ -72,6 +73,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entry.setName(name);
 		entry.setEmail(email);
 		entry.setMessage(message);
+		addEntry(entry);
 		entryPersistence.update(entry);
 		return entry;
 		}
@@ -110,15 +112,14 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		throws SystemException {
 		return entryPersistence.findByG_G(groupId, guestbookId, start, end);
 	}
-	public List<Entry> getEntries(
-		long groupId, long guestbookId, int start, int end,
+	public List<Entry> getEntries(long groupId, long guestbookId, int start, int end,
 		OrderByComparator<Entry> obc) {
 		return entryPersistence.findByG_G(groupId, guestbookId, start, end, obc);
 	}
 	public int getEntriesCount(long groupId, long guestbookId) {
 		return entryPersistence.countByG_G(groupId, guestbookId);
 		}
-
+	
 	protected void validate(String name, String email, String entry)
 		throws PortalException {
 		if (Validator.isNull(name)) {

@@ -53,6 +53,16 @@ public class EntryLocalServiceUtil {
 		return getService().addEntry(entry);
 	}
 
+	public static com.liferay.docs.guestbook.model.Entry addEntry(
+			long userId, long guestbookId, String name, String email,
+			String message,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addEntry(
+			userId, guestbookId, name, email, message, serviceContext);
+	}
+
 	/**
 	 * Creates a new entry with the primary key. Does not add the entry to the database.
 	 *
@@ -89,6 +99,14 @@ public class EntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteEntry(entryId);
+	}
+
+	public static com.liferay.docs.guestbook.model.Entry deleteEntry(
+			long entryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteEntry(entryId, serviceContext);
 	}
 
 	/**
@@ -229,6 +247,28 @@ public class EntryLocalServiceUtil {
 		return getService().getEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.docs.guestbook.model.Entry>
+		getEntries(long groupId, long guestbookId) {
+
+		return getService().getEntries(groupId, guestbookId);
+	}
+
+	public static java.util.List<com.liferay.docs.guestbook.model.Entry>
+			getEntries(long groupId, long guestbookId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().getEntries(groupId, guestbookId, start, end);
+	}
+
+	public static java.util.List<com.liferay.docs.guestbook.model.Entry>
+		getEntries(
+			long groupId, long guestbookId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.docs.guestbook.model.Entry> obc) {
+
+		return getService().getEntries(groupId, guestbookId, start, end, obc);
+	}
+
 	/**
 	 * Returns all the entries matching the UUID and company.
 	 *
@@ -269,6 +309,10 @@ public class EntryLocalServiceUtil {
 	 */
 	public static int getEntriesCount() {
 		return getService().getEntriesCount();
+	}
+
+	public static int getEntriesCount(long groupId, long guestbookId) {
+		return getService().getEntriesCount(groupId, guestbookId);
 	}
 
 	/**
@@ -340,6 +384,17 @@ public class EntryLocalServiceUtil {
 		com.liferay.docs.guestbook.model.Entry entry) {
 
 		return getService().updateEntry(entry);
+	}
+
+	public static com.liferay.docs.guestbook.model.Entry updateEntry(
+			long userId, long guestbookId, long entryId, String name,
+			String email, String message,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().updateEntry(
+			userId, guestbookId, entryId, name, email, message, serviceContext);
 	}
 
 	public static EntryLocalService getService() {

@@ -112,10 +112,10 @@ public class GuestbookModelImpl
 	public static final String TABLE_SQL_DROP = "drop table GB_Guestbook";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY guestbook.groupId ASC";
+		" ORDER BY guestbook.guestbookId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY GB_Guestbook.groupId ASC";
+		" ORDER BY GB_Guestbook.guestbookId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -143,6 +143,8 @@ public class GuestbookModelImpl
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
 	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	public static final long GUESTBOOKID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -636,7 +638,7 @@ public class GuestbookModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask = -1L;
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
 
 		if (!_setOriginalGroupId) {
 			_setOriginalGroupId = true;
@@ -964,23 +966,17 @@ public class GuestbookModelImpl
 
 	@Override
 	public int compareTo(Guestbook guestbook) {
-		int value = 0;
+		long primaryKey = guestbook.getPrimaryKey();
 
-		if (getGroupId() < guestbook.getGroupId()) {
-			value = -1;
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
 		}
-		else if (getGroupId() > guestbook.getGroupId()) {
-			value = 1;
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
 		}
 		else {
-			value = 0;
+			return 0;
 		}
-
-		if (value != 0) {
-			return value;
-		}
-
-		return 0;
 	}
 
 	@Override

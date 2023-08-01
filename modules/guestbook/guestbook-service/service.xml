@@ -32,11 +32,6 @@
 
 		<column name="name" type="String" />
 
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="groupId" />
-		</order>
 
 		<!-- Finder methods -->
 
@@ -47,34 +42,26 @@
 		<!-- References -->
 
 	</entity>
-	<entity name="Entry" local-service="true" uuid="true">
-			<!-- PK fields -->
-	
+	<entity local-service="true" name="Entry" uuid="true">
+		<!-- PK fields -->
 		<column name="entryId" primary="true" type="long" />
-		
+		<!-- Group instance -->
 		<column name="groupId" type="long" />
-		
+		<!-- Audit fields -->
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
-		
-		<column name="status" type="int" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
-		<column name="statusDate" type="Date" />
-		
 		<column name="name" type="String" />
 		<column name="email" type="String" />
 		<column name="message" type="String" />
 		<column name="guestbookId" type="long" />
-		
 		<finder name="G_G" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="guestbookId" />
+		<finder-column name="groupId" />
+		<finder-column name="guestbookId" />
 		</finder>
-	</entity>
+</entity>
 	<exceptions>
 		<exception>EntryEmail</exception>
 		<exception>EntryMessage</exception>
